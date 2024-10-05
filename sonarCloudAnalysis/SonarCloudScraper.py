@@ -1,4 +1,8 @@
-from sonarqube.sonarqube.cloud import SonarCloudClient
+import os
+import sys
+current_directory = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.join(current_directory, "sonarqube"))
+from sonarqube.cloud import SonarCloudClient
 import subprocess
 from git import Repo
 

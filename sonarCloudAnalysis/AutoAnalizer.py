@@ -1,10 +1,11 @@
+import os
 import shutil
 import stat
-
 from SonarCloudScraper import SonarCloudScraper
 import pandas as pd
-import os
 import dotenv
+
+
 
 dotenv.load_dotenv()
 
@@ -14,7 +15,9 @@ host = os.getenv("HOST")
 
 # Create a SonarCloudClient object
 sonar = SonarCloudScraper(token, host)
-df = pd.read_csv("../dataset/updated_Niche_with_Idioms.csv")
+current_directory = os.path.dirname(os.path.abspath(__file__))
+
+df = pd.read_csv(os.path.join(current_directory,"../dataset/updated_Niche_with_Idioms.csv"))
 directory = os.getenv("REPO_PATH")
 organization_name = os.getenv("ORGANIZATION_NAME")
 for i, repo in enumerate(df["GitHub Repo"]):
@@ -31,11 +34,12 @@ for i, repo in enumerate(df["GitHub Repo"]):
         #Put results in a csv
         df = pd.DataFrame([measures_dict])
         #append to csv
-
-        df.to_csv("sonarcloud_results.csv", mode='a', index=False, header=not os.path.exists("sonarcloud_results.csv"))
+        save_path = os.path.join(current_directory, "../dataset/sonarcloud_results.csv")
+        print(save_path)
+        df.to_csv(save_path, mode='a', index=False, header=not os.path.exists(save_path))
         del df
     except Exception as e:
-        print(e)
+        print(f"Error occurred: {e}")
     finally:
         if os.path.exists(directory):
             for root, dirs, files in os.walk(directory):

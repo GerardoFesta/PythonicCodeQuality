@@ -4,7 +4,7 @@ This project extracts non-Pythonic and Pythonic code instances and code smells f
 
 ## Prerequisites
 
-- **SonarScanner**: Download the latest version from the [SonarScanner documentation](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner/).
+- **SonarScanner**: Download the latest version from the [SonarScanner documentation](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner/). Make sure that you have the scanner installed and added to your PATH.
 - **SonarCloud account**: You will need an account and a [token](https://sonarcloud.io/account/security) to access the API.
 - **GitHub account**: You  need a GitHub token to calculate the Python percentage for the dataset.
 
@@ -30,7 +30,7 @@ Create a .env file in the root directory with the following content:
 ```bash
 SONAR_TOKEN = <your-sonarCloud-token>
 HOST = https://sonarcloud.io/  # or another host if you prefer, but the code is prepared for SonarCloud
-REPO_PATH = <Path-where-the-dataset-repos-will-be-cloned>
+REPO_PATH = <Path-where-the-dataset-repos-will-be-cloned> # you have to create this directory. Please use an absolute path
 ACCESS_TOKEN = <GithubToken>  # needed if you want to calculate Python Percentage
 ORGANIZATION_NAME = <Your-Org-Name-in-SonarCloud>
 ```
@@ -73,7 +73,7 @@ The project comes with all the datasets generated during the experiment. You can
 
 Here is a brief overview of the relevant directories and files:
 
-* `utils/`: Contains a script to calculate the percentage of Python code in the NICHE dataset and one to merge the code smells dataset and the Pythonic dataset.
+* `utils/`: Contains a script to merge the code smells dataset and the Pythonic dataset.
 * `nonPythonicExtraction/`: Contains scripts related to extracting non-Pythonic code.
 * `pythonicExtraction/`: Contains scripts related to extracting Pythonic code.
 * `sonarCloudAnalysis/`: Contains scripts for extracting code smells and quality metrics using SonarCloud.
