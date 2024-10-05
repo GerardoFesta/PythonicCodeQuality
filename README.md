@@ -34,30 +34,24 @@ REPO_PATH = <Path-where-the-dataset-repos-will-be-cloned>
 ACCESS_TOKEN = <GithubToken>  # Only needed if you want to calculate Python Percentage
 ORGANIZATION_NAME = <Your-Org-Name-in-SonarCloud>
 ```
-### 4. Python Percentage Extraction
-Run the following script to add the Python percentage to the NICHE dataset:
-    
-```bash
-python utils/PythonPercentageExtractor.py
-```
-### 5. Extracting Non-Pythonic Code Instances
-Execute the script to extract non-Pythonic code instances using RIdiom:
+### 4. Extracting Non-Pythonic Code Instances
+Execute the script to extract non-Pythonic code instances using RIdiom and Python Percentage using GitHub API:
 ```bash
 python nonPythonicExtraction/RIdiomRunner.py
 ```
-### 6. Extracting Pythonic Code Instances
+### 5. Extracting Pythonic Code Instances
 Run the Pythonic code extraction:
 ```bash
 python pythonicExtraction/PythonicExtractor.py
 ```
 
-### 7. Extracting Code Smells and Quality metrics
+### 6. Extracting Code Smells and Quality metrics
 Run the following script to extract code smells and quality metrics:
 ```bash
 python sonarCloudAnalysis/AutoAnalizer.py
 ```
 
-### 8. Merge the Datasets
+### 7. Merge the Datasets
 Run the following script to merge the datasets:
 ```bash
 python utils/merger.py
@@ -69,9 +63,9 @@ During the extraction process, the following datasets will be generated:
 
 * **NICHE dataset**: The original NICHE dataset.
 * **updated_NICHE**: NICHE dataset with the Python percentage added, created in step 4.
-* **updated_NICHE_with_Idioms**: The updated NICHE dataset with both non-Pythonic and Pythonic code instances, created in step 5 and updated in step 6.
-* **sonarcloud_results**: Extracted code smells and quality metrics from SonarCloud, created in step 7.
-* **NicheSonarMerged.csv**: The complete dataset containing all information, created in step 8.
+* **updated_NICHE_with_Idioms**: The updated NICHE dataset with both non-Pythonic and Pythonic code instances, created in step 4 and updated in step 5.
+* **sonarcloud_results**: Extracted code smells and quality metrics from SonarCloud, created in step 6.
+* **NicheSonarMerged.csv**: The complete dataset containing all information, created in step 7.
 * **NicheSonarMergedCleaned.csv**: A cleaned version of the dataset with failed projects removed.
 
 The project comes with all the datasets generated during the experiment. You can find them in the `dataset/` directory.

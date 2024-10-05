@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 class NicheScraper:
     def __init__(self):
         load_dotenv()
-        data_path = '../dataset/NICHE.csv'
+        data_path = './dataset/NICHE.csv'
         self.df = pd.read_csv(data_path)
         self.ACCESS_TOKEN = os.getenv('ACCESS_TOKEN')
 
@@ -38,5 +38,5 @@ class NicheScraper:
             except Exception as e:
                 print(f"Error: {e}. Skipping repository {repo_name}")
                 self.df.drop(self.df.loc[self.df['GitHub Repo'] == repo_name].index, inplace=True)
-        self.df['Pyhton_Percentage'] = python_percentage
-        self.df.to_csv("../dataset/updated_Niche.csv", index=False)
+        self.df['Python_Percentage'] = python_percentage
+        self.df.to_csv("./dataset/updated_Niche.csv", index=False)

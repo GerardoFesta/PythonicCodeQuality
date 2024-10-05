@@ -6,16 +6,19 @@ import subprocess
 import pandas as pd
 from dotenv import load_dotenv
 
-from utils.PythonPercentageExtractor import NicheScraper
+from PythonPercentageExtractor import NicheScraper
 
 
 class RIdiomRunner:
     def __init__(self):
         load_dotenv()
-        self.ridiom_path = os.getenv('RIDIOM_BASE_PATH')
+        current_directory = os.path.dirname(os.path.abspath(__file__))
+        self.ridiom_path = os.path.join(current_directory, 'RefactoringIdioms-0.0.11/RefactoringIdioms')
+
         try:
             # quick restart
-            self.df = pd.read_csv("../dataset/updated_Niche_with_Idioms.csv")
+            niche_csv_path = os.path.join(current_directory, '../dataset', 'updated_Niche_with_Idioms.csv')
+            self.df = pd.read_csv(niche_csv_path)
             if 'Assign Multi Targets' not in self.df.columns:
                 self.df['Assign Multi Targets'] = 0
                 self.df['Call Star'] = 0
@@ -29,9 +32,10 @@ class RIdiomRunner:
 
         except:
             # full restart
+            niche_csv_path = os.path.join(current_directory, '../dataset', 'updated_Niche.csv')
             NicheScraper().get_python_percentage()
-            self.df = pd.read_csv("../dataset/updated_Niche.csv")
-            self.df = self.df[self.df['Pyhton_Percentage'] > 50]
+            self.df = pd.read_csv(niche_csv_path)
+            self.df = self.df[self.df['Python_Percentage'] > 50]
             self.df['GitHub Repo'] = ["https://github.com/" + repo for repo in self.df['GitHub Repo'] + ".git"]
             self.df['Assign Multi Targets'] = 0
             self.df['Call Star'] = 0
@@ -50,7 +54,15 @@ class RIdiomRunner:
             result_dict = {'Assign Multi Targets': 0, 'Call Star': 0, 'List Comprehension': 0, 'Dict Comprehension': 0,
                            'Set Comprehension': 0, 'Truth Value Test': 0, 'Chain Compare': 0, 'For Multi Targets': 0,
                            'For Else': 0}
-            if self.df.loc[self.df['GitHub Repo'] == repo, 'Assign Multi Targets'].any() == 0 and  self.df.loc[self.df['GitHub Repo'] == repo, 'Call Star'].any() ==0 and self.df.loc[self.df['GitHub Repo'] == repo, 'List Comprehension'].any() == 0 and self.df.loc[self.df['GitHub Repo'] == repo, 'Dict Comprehension'].any() == 0 and self.df.loc[self.df['GitHub Repo'] == repo, 'Set Comprehension'].any() == 0 and self.df.loc[self.df['GitHub Repo'] == repo, 'Truth Value Test'].any() == 0 and self.df.loc[self.df['GitHub Repo'] == repo, 'Chain Compare'].any() == 0 and self.df.loc[self.df['GitHub Repo'] == repo, 'For Multi Targets'].any() == 0 and self.df.loc[self.df['GitHub Repo'] == repo, 'For Else'].any() == 0:
+            if self.df.loc[self.df['GitHub Repo'] == repo, 'Assign Multi Targets'].any() == 0 and self.df.loc[
+                self.df['GitHub Repo'] == repo, 'Call Star'].any() == 0 and self.df.loc[
+                self.df['GitHub Repo'] == repo, 'List Comprehension'].any() == 0 and self.df.loc[
+                self.df['GitHub Repo'] == repo, 'Dict Comprehension'].any() == 0 and self.df.loc[
+                self.df['GitHub Repo'] == repo, 'Set Comprehension'].any() == 0 and self.df.loc[
+                self.df['GitHub Repo'] == repo, 'Truth Value Test'].any() == 0 and self.df.loc[
+                self.df['GitHub Repo'] == repo, 'Chain Compare'].any() == 0 and self.df.loc[
+                self.df['GitHub Repo'] == repo, 'For Multi Targets'].any() == 0 and self.df.loc[
+                self.df['GitHub Repo'] == repo, 'For Else'].any() == 0:
                 print("Mining repository: ", repo)
                 try:
                     subprocess.check_call(["git", "clone", repo], cwd=repo_path)
@@ -65,8 +77,11 @@ class RIdiomRunner:
                         repo_path = repo_path + repo.split("/")[-1].split(".")[0]
                     print(repo_path)
 
-                    subprocess.check_call(["python3", self.ridiom_path+"/main.py","--filepath",repo_path,"--output_codepair", repo_path+"/result.json"], cwd=self.ridiom_path)
-                    print("/main.py "+ "--filepath \'"+repo_path+"\' --outputdir \'"+ repo_path+"/result.json \'")
+                    subprocess.check_call(
+                        ["python3", self.ridiom_path + "/main.py", "--filepath", repo_path, "--output_codepair",
+                         repo_path + "/result.json"], cwd=self.ridiom_path)
+                    print(
+                        "/main.py " + "--filepath \'" + repo_path + "\' --outputdir \'" + repo_path + "/result.json \'")
                 except Exception as e:
                     print(f"Error: {e}. Skipping repository {repo}")
                     for dir_name in os.listdir(os.getenv("REPO_PATH")):
@@ -96,13 +111,13 @@ class RIdiomRunner:
                     for idiom in result_dict.keys():
                         self.df.loc[self.df['GitHub Repo'] == repo, idiom] = result_dict[idiom]
 
-
-                #clean up before next repo
+                # clean up before next repo
                 if os.path.isdir(repo_path):
                     subprocess.check_call(["rm", "-rf", repo_path])
                     subprocess.check_call(["mkdir", repo_path])
-                    self.df.to_csv("../dataset/updated_Niche_with_Idioms.csv", index=False)
-
+                    current_directory = os.path.dirname(os.path.abspath(__file__))
+                    self.df.to_csv(os.path.join(current_directory, '../dataset', 'updated_Niche_with_Idioms.csv'),
+                                   index=False)
 
 
 if __name__ == "__main__":
