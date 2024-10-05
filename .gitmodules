@@ -1,0 +1,3 @@
+[submodule "sonarCloudAnalysis/sonarqube"]
+	path = sonarCloudAnalysis/sonarqube
+	url = https://gitlab.com/schmieder.matthias/python-sonar-api
