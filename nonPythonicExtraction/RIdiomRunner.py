@@ -6,7 +6,7 @@ import subprocess
 import pandas as pd
 from dotenv import load_dotenv
 
-from PythonPercentageExtractor import NicheScraper
+from utils.PythonPercentageExtractor import NicheScraper
 
 
 class RIdiomRunner:
@@ -15,7 +15,7 @@ class RIdiomRunner:
         self.ridiom_path = os.getenv('RIDIOM_BASE_PATH')
         try:
             # quick restart
-            self.df = pd.read_csv("../dataset/updated_Niche_with_Levels.csv")
+            self.df = pd.read_csv("../dataset/updated_Niche_with_Idioms.csv")
             if 'Assign Multi Targets' not in self.df.columns:
                 self.df['Assign Multi Targets'] = 0
                 self.df['Call Star'] = 0
@@ -101,7 +101,7 @@ class RIdiomRunner:
                 if os.path.isdir(repo_path):
                     subprocess.check_call(["rm", "-rf", repo_path])
                     subprocess.check_call(["mkdir", repo_path])
-                    self.df.to_csv("../dataset/updated_Niche_with_Levels.csv", index=False)
+                    self.df.to_csv("../dataset/updated_Niche_with_Idioms.csv", index=False)
 
 
 

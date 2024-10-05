@@ -84,5 +84,5 @@ class PythonicExtractor:
 
 if __name__ == "__main__":
     project_path = os.getenv("PROJECT_PATH")
-    runner = PythonicExtractor(project_path, csvpath="./dataset/updated_Niche_with_Levels.csv")
+    runner = PythonicExtractor(project_path, csvpath="../dataset/updated_Niche_with_Idioms.csv")
     runner.mine()

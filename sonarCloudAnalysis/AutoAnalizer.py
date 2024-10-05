@@ -14,7 +14,7 @@ host = os.getenv("HOST")
 
 # Create a SonarCloudClient object
 sonar = SonarCloudScraper(token, host)
-df = pd.read_csv("../dataset/updated_Niche_with_Levels.csv")
+df = pd.read_csv("../dataset/updated_Niche_with_Idioms.csv")
 directory = os.getenv("REPO_PATH")
 organization_name = os.getenv("ORGANIZATION_NAME")
 for i, repo in enumerate(df["GitHub Repo"]):
