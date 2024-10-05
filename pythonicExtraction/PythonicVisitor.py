@@ -48,7 +48,7 @@ class PythonicVisitor(ast.NodeVisitor):
         self.generic_visit(node)
 
     def visit_For(self, node):
-        if isinstance(node.target, ast.List):
+        if isinstance(node.target, ast.List) or isinstance(node.target, ast.Tuple):
             self.pythonic_dict['PY_For Multi Targets'] += 1
         if node.orelse:
             self.pythonic_dict['PY_For Else'] += 1

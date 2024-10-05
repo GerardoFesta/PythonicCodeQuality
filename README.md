@@ -6,7 +6,7 @@ This project extracts non-Pythonic and Pythonic code instances and code smells f
 
 - **SonarScanner**: Download the latest version from the [SonarScanner documentation](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner/).
 - **SonarCloud account**: You will need an account and a [token](https://sonarcloud.io/account/security) to access the API.
-- **GitHub account**: You may need a GitHub token to calculate the Python percentage for your dataset.
+- **GitHub account**: You  need a GitHub token to calculate the Python percentage for the dataset.
 
 ## Installation Steps
 
@@ -31,7 +31,7 @@ Create a .env file in the root directory with the following content:
 SONAR_TOKEN = <your-sonarCloud-token>
 HOST = https://sonarcloud.io/  # or another host if you prefer, but the code is prepared for SonarCloud
 REPO_PATH = <Path-where-the-dataset-repos-will-be-cloned>
-ACCESS_TOKEN = <GithubToken>  # Only needed if you want to calculate Python Percentage
+ACCESS_TOKEN = <GithubToken>  # needed if you want to calculate Python Percentage
 ORGANIZATION_NAME = <Your-Org-Name-in-SonarCloud>
 ```
 ### 4. Extracting Non-Pythonic Code Instances

@@ -3,8 +3,9 @@ import os
 from git import Repo
 import ast
 import pandas as pd
+from dotenv import load_dotenv
 
-from pythonicExtraction.PythonicVisitor import PythonicVisitor
+from PythonicVisitor import PythonicVisitor
 
 
 class PythonicExtractor:
@@ -83,6 +84,8 @@ class PythonicExtractor:
 
 
 if __name__ == "__main__":
-    project_path = os.getenv("PROJECT_PATH")
-    runner = PythonicExtractor(project_path, csvpath="../dataset/updated_Niche_with_Idioms.csv")
+    load_dotenv()
+    project_path = os.getenv("REPO_PATH")
+    current_directory = os.path.dirname(os.path.abspath(__file__))
+    runner = PythonicExtractor(project_path, csvpath=os.path.join(current_directory, '../dataset', 'updated_Niche_with_Idioms.csv'))
     runner.mine()
